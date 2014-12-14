@@ -1,0 +1,9 @@
+* Base de datos final
+Web:		www.hostinger.mx
+Usuario: 	jonathangtz.sosa@gmail.com
+Password: 	super.sys14b
+
+Host: 		mysql.hostinger.mx
+Usuario: 	munos
+Password: 	luisalberto
+DB Name:	schoolsys

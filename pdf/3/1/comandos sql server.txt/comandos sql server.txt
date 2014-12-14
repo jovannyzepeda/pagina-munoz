@@ -1,0 +1,31 @@
+ 
+crear una llave foranea en codigo base es de esta manera 
+
+create table renta_maestra(
+num_renta serial,
+fecha_renta date,
+numero_empleado int,
+numero_miembro int,
+primary key (num_renta)
+);
+
+create table detalle_renta(
+num_renta int,
+precio_renta money,
+numero_video,
+primary key(),
+foreing key(num_renta) refetences renta_maestra(num_renta)
+);
+
+donde primero se tiene que crear la tabla base y despues la tabla secundaria donde primero es el dato a referenciar en la tabla actual yy despues las references a la otra talba 
+
+
+
+
+getdate() obtiene la fecha del sistema en ese momento
+
+dateadd(dd,21,getdate())
+agrega 21 dias a la fecha actual 
+
+scope_identity() obtiene el ultimo id insertado
+

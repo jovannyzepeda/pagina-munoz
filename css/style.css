@@ -1,0 +1,121 @@
+@import url(font-awesome/font-awesome.css);
+@import url(font-awesome/font-awesome.min.css);
+@import url("alertas.css");
+@charset "utf-8";
+
+body {
+	height: 100%;
+	background: #2c3338;
+	color: #606468;
+	font: 87.5%/1.5em 'Open Sans', sans-serif;
+	margin: 0;
+}
+/*  Nuevos estilos bootstrap*/
+
+	@media(max-width: 520px){
+		a.list-group-item{
+		height: 70px;}
+	}
+	i.fa.fa-file-zip-o.fa-12x.ico-center,
+	i.fa.fa-file-pdf-o.fa-12x.ico-center{
+		max-height: 168px;
+}
+
+.ico-center{
+	text-align: center;
+	display: block;
+	height: 100%;
+	width: 50%;
+	margin: auto;
+}
+
+.ico-red2{
+	color: rgb(224, 67, 67);
+}
+
+.ico-blue2{
+	color: rgb(56, 129, 200);
+}
+.ico-green2{
+	color: rgb(86, 179, 91);
+}
+.evaluando-complete{
+	position: absolute;
+	right: -0.5em;
+}
+	.evaluando-complete .borde{
+		position: absolute;
+		font-size: 2.5em;
+		right: 0;
+		top: -10px;
+		color: #303030;
+		z-index: 1;
+	}
+	.evaluando-complete .icon{
+		position: absolute;
+		font-size: 1.5em;
+		right: .4em;
+		top: -0.2em;
+		color: #E0DE1E;
+		z-index: 2;
+	}
+.trans-7{
+	opacity: .7;
+}
+
+/* File excel  */
+.smallchart {
+background: white;
+text-align: center;
+overflow: hidden;
+}
+.box {
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+-webkit-box-shadow: 0 1px 0 1px #e4e6eb;
+-moz-box-shadow: 0 1px 0 1px #e4e6eb;
+box-shadow: 0 1px 0 1px #e4e6eb;
+margin: 0 0 30px 0;
+}
+.smallchart.green .title {
+background: rgb(86, 179, 91);
+}
+.smallchart .title {
+padding: 10px;
+color: white;
+background: #eaebef;
+}
+.smallchart .info {
+	opacity: 0;
+	height: 0;
+	float: left;
+	-webkit-transition:all 0.5s ease;
+    -moz-transition:all 0.6s ease;
+}
+.smallchart .content {
+padding: 4px 0;
+ 
+}
+	#filebox:hover > .info{
+		opacity: 1;
+		height: auto;
+		-webkit-transition:all 0.5s ease;
+    -moz-transition:all 0.6s ease;
+	}
+	.smallchart .content:hover{
+		margin-right: -50%;
+		-moz-transition: all 0.3s ease-out;  /* FF4+ */
+	    -o-transition: all 0.3s ease-out;  /* Opera 10.5+ */
+	    -webkit-transition: all 0.3s ease-out;  /* Saf3.2+, Chrome */
+	    -ms-transition: all 0.3s ease-out;  /* IE10 */
+	    transition: all 0.3s ease-out;  
+	}
+	
+.smallchart .value {
+color: #fff;
+background: rgb(86, 179, 91);
+padding: 10px;
+}
+
+

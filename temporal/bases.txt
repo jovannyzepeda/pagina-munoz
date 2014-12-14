@@ -1,0 +1,148 @@
+-- BASE DE DATOS
+CREATE DATABASE schoolsys;
+
+USE schoolsys;
+
+-- creando tablas
+-- tabla de tipo evaluando
+CREATE TABLE tipo_evaluando
+(
+	id_tipo_evaluando INT AUTO_INCREMENT PRIMARY KEY,
+	nombre char(10) NOT NULL UNIQUE,
+	prefijo char(1) NOT NULL UNIQUE
+);
+
+CREATE TABLE usuario
+(
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nickname char(15) NOT NULL,
+	codigo char(9),
+	password varchar(100) NOT NULL,
+	activo bit DEFAULT 0
+);
+
+-- tabla alumno
+CREATE TABLE alumno
+(
+	codigo char(9) PRIMARY KEY,
+    nombre varchar(120) NOT NULL,
+	escuela_procedencia varchar(50),
+	promedio_escuela_procedencia decimal,
+    id_usuario int ,
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+
+
+-- tabla profesor
+
+CREATE TABLE profesor
+(
+	codigo char(9) PRIMARY KEY,
+    nombre varchar(120),
+    id_usuario int,
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+	carrera varchar(50)
+);
+
+-- tabla ciclo
+CREATE TABLE ciclo
+(
+	id_ciclo INT AUTO_INCREMENT PRIMARY KEY,
+	fecha_inicio DATE,
+	fecha_fin DATE,
+	prefijo char(3) NOT NULL
+);
+
+-- tabla curso
+CREATE TABLE curso
+(
+	id_curso INT AUTO_INCREMENT PRIMARY KEY,
+	clave char(8),
+	nombre varchar(100)
+);
+
+-- tabla evaluando
+CREATE TABLE evaluando
+(
+	id_evaluando INT AUTO_INCREMENT PRIMARY KEY,
+	pdf varchar(150) NOT NULL,
+	codigo char,
+	id_curso INT,
+	id_tipo_evaluando INT,
+	porcentaje decimal NOT NULL,
+	version char(1),
+FOREIGN KEY (codigo) REFERENCES profesor(codigo),
+FOREIGN KEY (id_curso) REFERENCES curso(id_curso),
+FOREIGN KEY (id_tipo_evaluando) REFERENCES tipo_evaluando(id_tipo_evaluando)
+);
+
+-- tabla grupo
+CREATE TABLE grupo
+(
+	id_grupo INT AUTO_INCREMENT PRIMARY KEY,
+	codigo char,
+	FOREIGN KEY(codigo) REFERENCES profesor(codigo),
+	id_curso INT REFERENCES curso,
+	seccion char(5),
+	id_ciclo INT,
+	FOREIGN KEY(id_ciclo) REFERENCES ciclo(id_ciclo)
+);
+
+-- tabla alumno inscrito
+CREATE TABLE alumno_inscrito
+(
+	id_alumno_inscrito INT AUTO_INCREMENT PRIMARY KEY,
+	id_grupo INT,
+	FOREIGN KEY(id_grupo) REFERENCES grupo(id_grupo),
+	codigo char,
+	FOREIGN KEY(codigo) REFERENCES alumno(codigo),
+	activo bit NOT NULL,
+	equipo char(2)
+);
+
+-- tabla asistencia
+CREATE TABLE asistencia
+(
+	id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
+	id_alumno_inscrito int,
+	FOREIGN KEY(id_alumno_inscrito) REFERENCES alumno_inscrito(id_alumno_inscrito),
+	fecha DATE NOT NULL,
+	asistencia char(1) NOT NULL
+);
+
+-- tabla entregble
+
+CREATE TABLE entregable
+(
+	id_entregable INT AUTO_INCREMENT PRIMARY KEY,
+	id_evaluando int,
+	FOREIGN KEY(id_evaluando) REFERENCES evaluando(id_evaluando),
+	fecha_liberacion DATE NOT NULL,
+	fecha_limite DATE NOT NULL,
+	fecha_plan_entrega DATE NOT NULL,
+	version_actividad char(1),
+	liberado bit NOT NULL,
+	puntos_calificacion_final DECIMAL,
+	id_grupo int,
+	FOREIGN KEY(id_grupo) REFERENCES grupo(id_grupo)
+);
+
+-- tabla evaluacion
+CREATE TABLE evaluacion
+(
+	id_evaluacion INT AUTO_INCREMENT PRIMARY KEY,
+	id_alumno_inscrito INT,
+	FOREIGN KEY(id_alumno_inscrito) REFERENCES alumno_inscrito(id_alumno_inscrito),
+	id_evaluando INT,
+	FOREIGN KEY(id_evaluando) REFERENCES evaluando(id_evaluando),
+	fecha_entrega_personalizada DATE,
+	ultima_version_entregada char(1),
+	autorizar_fecha_entrega DATE,
+	puntos_merito INT,
+	notas_merito varchar(300),
+	puntos_demerito INT,
+	notas_demerito varchar(300),
+	id_entregable INT,
+	FOREIGN KEY(id_entregable) REFERENCES entregable(id_entregable)
+);

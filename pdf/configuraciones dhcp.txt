@@ -1,0 +1,24 @@
+ 
+el dhcp se encarga de entregar direcciones ip 
+este funciona de la siguiente manera ,, atraves de los puertos udp 67(escucha desde el servidor) y 68(esta en envio desde los clientes)
+ (el paquete se llama request y lo envia al broadcast para que se envie a todos lados y tener la ip correcta)
+
+
+logs del sistema /var/log
+
+para que funcione la practica dhcp tenemos que configurar la direccion 10.22.21.0/24 de dhcp  y aparte seria 10.22.21.1( para el servidor)
+pool de direcciones ira de la 50 a la 250
+reservacion especial a la macadrres 00:11:22:33:44:55 tenga la direccion reservada de 10.22.21.10
+
+si se llega a hace ren casa consegir cable cruzado  poner la maquina virtual en puente o bien poner doble maquina virtual pero es lento y feo 
+(debo de quitar la direcciond el router)
+
+
+
+reiniciar el servicio es /etc/init.d/isc-dhcp-server restart
+
+
+redes privadas 
+192.168.0.0 / 16 
+10.0.0.0/8
+172.16.2.2/12

@@ -1,0 +1,200 @@
+SELECT idgrupo,clave,seccion,materia,prefijo,equipo
+			FROM alumno_grupo WHERE prefijo ='$ciclo' AND nombre = '$nombre'        
+
+
+//Añadiendo el campo apellido materno en la seccion usuarios
+function anade_campos_administracion_usuarios($campos) {
+    $campos['billing']['fields']['billing_materno'] = array(
+            'label' => __('Apellido Materno', 'woocommerce'),
+            'description' => ''
+    );
+ 
+    $campos['shipping']['fields']['shipping_materno'] = array(
+            'label' => __('Apellido Materno', 'woocommerce'),
+            'description' => ''
+    );
+    $campos['shipping']['fields']['shipping_email'] = array(
+            'label' => __('Email', 'woocommerce'),
+            'description' => ''
+    );
+ 
+    //ordenando los campos los campos
+    $campos_nuevos['billing']['title'] = $campos['billing']['title'];
+    $campos_nuevos['billing']['fields']['billing_first_name'] = $campos['billing']['fields']['billing_first_name'];
+    $campos_nuevos['billing']['fields']['billing_last_name'] = $campos['billing']['fields']['billing_last_name'];
+    $campos_nuevos['billing']['fields']['billing_materno'] = $campos['billing']['fields']['billing_materno'];
+    $campos_nuevos['billing']['fields']['billing_company'] = $campos['billing']['fields']['billing_company'];
+    $campos_nuevos['billing']['fields']['billing_address_1'] = $campos['billing']['fields']['billing_address_1'];
+    $campos_nuevos['billing']['fields']['billing_address_2'] = $campos['billing']['fields']['billing_address_2'];
+    $campos_nuevos['billing']['fields']['billing_postcode'] = $campos['billing']['fields']['billing_postcode'];
+    $campos_nuevos['billing']['fields']['billing_city'] = $campos['billing']['fields']['billing_city'];
+    $campos_nuevos['billing']['fields']['billing_state'] = $campos['billing']['fields']['billing_state'];
+    $campos_nuevos['billing']['fields']['billing_country'] = $campos['billing']['fields']['billing_country'];
+    $campos_nuevos['billing']['fields']['billing_phone'] = $campos['billing']['fields']['billing_phone'];
+    $campos_nuevos['billing']['fields']['billing_email'] = $campos['billing']['fields']['billing_email'];
+ 
+    $campos_nuevos['shipping']['title'] = $campos['shipping']['title'];
+    $campos_nuevos['shipping']['fields']['shipping_first_name'] = $campos['shipping']['fields']['shipping_first_name'];
+    $campos_nuevos['shipping']['fields']['shipping_last_name'] = $campos['shipping']['fields']['shipping_last_name'];
+    $campos_nuevos['shipping']['fields']['shipping_materno'] = $campos['shipping']['fields']['shipping_materno'];
+    $campos_nuevos['shipping']['fields']['shipping_company'] = $campos['shipping']['fields']['shipping_company'];
+
+    $campos_nuevos['shipping']['fields']['shipping_address_1'] = $campos['shipping']['fields']['shipping_address_1'];
+    $campos_nuevos['shipping']['fields']['shipping_address_2'] = $campos['shipping']['fields']['shipping_address_2'];
+    $campos_nuevos['shipping']['fields']['shipping_postcode'] = $campos['shipping']['fields']['shipping_postcode'];
+    $campos_nuevos['shipping']['fields']['shipping_city'] = $campos['shipping']['fields']['shipping_city'];
+    $campos_nuevos['shipping']['fields']['shipping_state'] = $campos['shipping']['fields']['shipping_state'];
+    $campos_nuevos['shipping']['fields']['shipping_country'] = $campos['shipping']['fields']['shipping_country'];
+    $campos_nuevos['shipping']['fields']['shipping_phone'] = $campos['shipping']['fields']['shipping_phone'];
+    $campos_nuevos['shipping']['fields']['shipping_email'] = $campos['shipping']['fields']['shipping_email'];
+ 
+    $campos_nuevos = apply_filters('wcbcf_customer_meta_fields', $campos_nuevos);
+ 
+    return $campos_nuevos;
+}
+add_filter('woocommerce_customer_meta_fields', 'anade_campos_administracion_usuarios');
+ 
+//Añadir apellido a la dirección de facturación y envío
+function anade_campo_materno_usuario_direccion_facturacion($campos, $usuario) {
+    $campos['materno'] = get_user_meta($usuario, 'billing_materno', true);
+    return $campos;
+}
+add_filter('woocommerce_user_column_billing_address','anade_campo_materno_usuario_direccion_facturacion', 1, 2);
+function anade_campo_materno_usuario_direccion_envio($campos, $usuario) {
+    $campos['materno'] = get_user_meta($usuario, 'shipping_materno', true);
+    return $campos;
+}
+add_filter('woocommerce_user_column_shipping_address','anade_campo_materno_usuario_direccion_envio', 1, 2);
+ 
+//Añadir el campo apellido en editar la dirección
+function anade_campo_materno_editar_direccion($campos, $usuario, $nombre) {
+    $campos['materno'] = get_user_meta($usuario, $nombre . '_materno', true);
+    //Ordena los campos
+    $campos_nuevos['first_name'] = $campos['first_name'];
+    $campos_nuevos['last_name'] = $campos['last_name'];
+    $campos_nuevos['materno'] = $campos['materno'];
+    $campos_nuevos['company'] = $campos['company'];
+    $campos_nuevos['address_1'] = $campos['address_1'];
+    $campos_nuevos['address_2'] = $campos['address_2'];
+    $campos_nuevos['postcode'] = $campos['postcode'];
+    $campos_nuevos['city'] = $campos['city'];
+    $campos_nuevos['state'] = $campos['state'];
+    $campos_nuevos['country'] = $campos['country'];
+ 
+    return $campos_nuevos;
+}
+add_filter('woocommerce_my_account_my_address_formatted_address', 'anade_campo_materno_editar_direccion', 10, 3);
+ 
+//Añadir el campo apellidos en el Detalles del pedido
+function anade_campo_materno_editar_direccion_pedido($campos) {
+    $campos['materno'] = array(
+        'label' => __('Apellido Materno', 'woocommerce'),
+        'show'  => false
+    );
+    //Ordena los campos
+    $campos_nuevos['first_name'] = $campos['first_name'];
+    $campos_nuevos['last_name'] = $campos['last_name'];
+    $campos_nuevos['materno'] = $campos['materno'];
+    $campos_nuevos['company'] = $campos['company'];
+    $campos_nuevos['address_1'] = $campos['address_1'];
+    $campos_nuevos['address_2'] = $campos['address_2'];
+    $campos_nuevos['postcode'] = $campos['postcode'];
+    $campos_nuevos['city'] = $campos['city'];
+    $campos_nuevos['state'] = $campos['state'];
+    $campos_nuevos['country'] = $campos['country'];
+ 
+    return $campos_nuevos;
+}
+add_filter('woocommerce_admin_billing_fields', 'anade_campo_materno_editar_direccion_pedido');
+add_filter('woocommerce_admin_shipping_fields', 'anade_campo_materno_editar_direccion_pedido');
+ 
+function carga_hoja_de_estilo_editar_direccion_pedido() {
+    echo '</pre>
+<style type="text/css"><!--
+    #order_data .order_data_column ._billing_company_field, #order_data .order_data_column ._shipping_company_field,
+        #order_data .order_data_column ._billing_materno_field, #order_data .order_data_column ._shipping_materno_field { float: right; margin: 9px 0 0; padding: 0; width: 48%; }
+    .wp-admin select { height: 23px; }
+--></style>
+<pre>';
+}
+add_action('woocommerce_admin_order_data_after_billing_address', 'carga_hoja_de_estilo_editar_direccion_pedido');
+542
+////nafarrate
+		servicioPropiedades.propiedad( parametros, function(data){
+			$scope.propiedad = data.propiedad;
+            $scope.diferencias=data.diferencias;
+            for(var i =0 ; i<$scope.diferencias.length;i++){
+            switch($scope.diferencias[i]){
+                    case 'nombre': 
+                        $scope.name = function(){
+                        return 'red';
+                        }
+                    break;
+                    case 'fecha_edicion' :
+                            $scope.fecha = function(){
+                            return 'red';
+                             }
+                    break;
+                    case 'descripcion' :
+                            $scope.desc = function(){
+                            return 'red';
+                            }
+                    break;
+                    case 'calle' : case 'num_exterior' : case 'colonia' : case 'codigo_postal' : 
+                    case 'estado' : case 'municipio' :
+                            $scope.dir = function(){
+                            return 'green';
+                            }
+                    break;
+                    case 'superficie' : case 'construccion' : case 'unidad_medida_construccion' : 
+                    case 'unidad_medida_superficie' :
+                             $scope.build = function(){
+                                return 'red';
+                            }
+                    break;
+                    case 'precio_venta' : case 'precio_renta' : case 'moneda_renta' : 
+                    case 'moneda_venta' :
+                             $scope.price = function(){
+                                return 'blue';
+                             }
+                    break;
+                }           
+            }
+            if( !$scope.propiedad.imagenes ) {
+                $scope.propiedad.imagenes =  [data.propiedad.imagen_default];
+
+            }
+
+			$scope.mapa.latitud = data.propiedad.lat;
+			$scope.mapa.longitud = data.propiedad.lng;
+			$scope.mapa.radio = Number(data.radio);
+
+
+
+h3.nombre_propiedad.red , span.propiedad_id.red , div.panel-heading.green , 
+div.panel-body.red , div.panel-body.blue , h5.panel-title.red{
+	color: red;
+}
+
+
+callback(data);
+
+
+
+
+alter table grupo add horario varchar(100);
+drop view relacionciclo;
+create view relacionciclo as select profesor.nombre as profesor, grupo.seccion as seccion, curso.clave as clave, curso.nombre as materia, grupo.id_grupo as idgrupo,
+grupo.horario as horario from grupo  inner join curso on curso.id_curso = grupo.id_grupo inner  inner  join profesor on profesor.codigo = grupo.codigo ;
+
+drop view alumno_grupo;
+create view alumno_grupo as select alumno.nombre as nombre, alumno_inscrito.codigo as codigo, relacionciclo.materia as materia, alumno_inscrito.equipo as equipo , 
+relacionciclo.prefijo as prefijo, relacionciclo.seccion as seccion, relacionciclo.clave as clave, relacionciclo.idgrupo as idgrupo, relacionciclo.horario as horario from alumno_inscrito
+ join alumno on alumno.codigo = alumno_inscrito.codigo join relacionciclo  on relacionciclo.idgrupo = alumno_inscrito.id_grupo;
+
+
+idd grupo seccion clave
+
+
+id_grupo autoincrement       codigo con el codigo de session     id curso   select q tenga value = idcurso y texto el curso   ciclo lo mismo a lo anterior y un input de horario 
+

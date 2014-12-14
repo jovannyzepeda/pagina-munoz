@@ -1,0 +1,29 @@
+ 
+termino demonio
+es un proceso   que se ejecuta en segundo plano  Este tipo de programas  puede ser ejecutado en forma persistente o reiniciado si se intenta matar el proceso. 
+
+DSA  es un estándar FIPS para firmas digitales. Fue un Algoritmo que sirve para firmar y no para cifrar información.
+
+RSA pueden encriptar todo el documento y la firma de archivo a diferencia que el DSA que solo lo firma.
+
+ Instalar paquetes:
+
+sudo aptitude install nombre_paquete
+
+* Desinstalar paquetes:
+
+sudo aptitude remove nombre_paquete
+
+* Desinstalar paquetes (incluyendo archivos de configuración):
+
+sudo aptitude remove --purge nombre_paquete
+
+* Actualizar la lista de paquetes disponibles:
+
+sudo aptitude update
+
+* Actualizar el sistema con las actualizaciones de paquetes disponibles:
+
+sudo aptitude upgrade
+
+apt-get install paquete

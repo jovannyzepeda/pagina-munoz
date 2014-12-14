@@ -1,0 +1,12 @@
+ deborphan
+sudo dpkg --purge $(deborphan)   elimina las librerias huerfanas
+dpkg -l $(deborphan --find-config)   muestra ficheros de configuracion que ya no se utilizan
+sudo dpkg --purge  $(deborphan --find-config)   elimina los ficheros de configuracion que ya no se utilizan
+
+
+dpkg --get-selections | grep linux-image
+
+sudo apt-get remove --purge linux-image-X.X.XX-XX-generic
+
+
+borrar kernel inecesarios

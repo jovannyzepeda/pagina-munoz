@@ -1,0 +1,16 @@
+.alertas{
+	position: fixed;
+	top:10px;
+	right: 25px;
+	width: 230px;
+	height: auto;
+}
+.alerta{
+	position: relative;
+	background: #E0E0E0;
+	margin: 0 0 5px 0;
+	padding: 5px 10px;
+	color: #000;
+	border-radius: 1px;
+}
+
